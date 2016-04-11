@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="App">
+
+    <head>
+        <meta charset="UTF-8">
+       <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
+        <title>Attrack</title>
+
+        <!--Setup library-->
+        <link rel="stylesheet" href="lib/ionic/css/ionic.css">
+        <script src="lib/ionic/js/ionic.bundle.js"></script>
+        <script src="cordova.js"></script>
+
+        <!--Setup app-->
+        <link rel="stylesheet" href="index.css">
+        <script>
+        var App = angular.module("App",["ionic"]);
+
+App.controller("AppCtrl",["$scope","$log","$http",AppCtrl]);
+
+function AppCtrl($scope,$log,$http){
+    
+    $scope.userinput = ' ';
+  
+    function getatt(){
+       
+    $http.get('http://attrack.in/api/'+$scope.userinput)
+        
+        .success(function(data) {
+                                    $scope.attdata=[];
+                                    window.localStorage['data'] = JSON.stringify(data);
+                                    var data = JSON.parse(window.localStorage['data'] || '{}');
+                                    $scope.attdata=data;
+                                    $scope.$broadcast("scroll.refreshComplete");
+                                });}
+    
+    
+    
+    $scope.refresh = function(){
+    getatt();}
+    
+    $scope.getatt = function(){
+    getatt();
+  
+   
+    
+    }
+    
+}
+        
+        
+        </script>
+    </head>
+<body data-ng-controller="AppCtrl">
+    
+    <ion-header-bar class="bar-dark">
+            <h1 class="title">ATTRACK</h1>
+            
+             
+            
+                
+   
+        </ion-header-bar>
+        
+  <ion-content>
+         <ion-refresher on-refresh="refresh()"></ion-refresher>
+          
+    <div class="list list-inset" ng-hide="showme">
+              <label class="item item-input">
+                <input type="text" placeholder="Reg No/ Name" ng-model="$parent.userinput">
+              </label>
+             
+<button class="button button-block button-dark" ng-click="showme=true;getatt()" >
+                  TRACK
+            </button>
+    </div>
+          
+  <div class="attdata" ng-show="showme">
+      <center> <h6>Pull Down To Refresh</h6></center>
+  <div class="card">
+      <div class="item item-divider">
+    {{attdata.studentname}}
+      </div>
+      <div class="item item-text-wrap">
+        {{attdata.studentregno}}
+            <br>
+            {{attdata.studentbranch}}
+            <br>
+            SEM {{attdata.studentsem}}<br>
+            <button class="button button-small button-light" ng-click="showme=false">
+              Logout
+            </button>
+      </div>
+  
+</div>
+  
+  <div class="button-bar">
+  <a class="button">{{attdata.sub1code}}</a>
+  <a class="button">{{attdata.sub1name}}</a>
+  <a class="button">{{attdata.sub1frac}}</a>
+  <a class="button">{{attdata.sub1atp}}</a>
+  </div>
+   <div class="button-bar">
+  <a class="button">{{attdata.sub2code}}</a>
+  <a class="button">{{attdata.sub2name}}</a>
+  <a class="button">{{attdata.sub2frac}}</a>
+  <a class="button">{{attdata.sub2atp}}</a>
+  </div>
+ 
+   <div class="button-bar">
+  <a class="button">{{attdata.sub3code}}</a>
+  <a class="button">{{attdata.sub3name}}</a>
+  <a class="button">{{attdata.sub3frac}}</a>
+  <a class="button">{{attdata.sub3atp}}</a>
+  </div>
+ 
+   <div class="button-bar">
+  <a class="button">{{attdata.sub4code}}</a>
+  <a class="button">{{attdata.sub4name}}</a>
+  <a class="button">{{attdata.sub4frac}}</a>
+  <a class="button">{{attdata.sub4atp}}</a>
+  </div>
+ 
+   <div class="button-bar">
+  <a class="button">{{attdata.sub5code}}</a>
+  <a class="button">{{attdata.sub5name}}</a>
+  <a class="button">{{attdata.sub5frac}}</a>
+  <a class="button">{{attdata.sub5atp}}</a>
+  </div>
+ 
+   <div class="button-bar">
+  <a class="button">{{attdata.sub6code}}</a>
+  <a class="button">{{attdata.sub6name}}</a>
+  <a class="button">{{attdata.sub6frac}}</a>
+  <a class="button">{{attdata.sub6atp}}</a>
+  </div>
+ 
+   <div class="button-bar">
+  <a class="button">{{attdata.sub7code}}</a>
+  <a class="button">{{attdata.sub7name}}</a>
+  <a class="button">{{attdata.sub7frac}}</a>
+  <a class="button">{{attdata.sub7atp}}</a>
+  </div>
+ 
+   <div class="button-bar">
+  <a class="button">{{attdata.sub8code}}</a>
+  <a class="button">{{attdata.sub8name}}</a>
+  <a class="button">{{attdata.sub8frac}}</a>
+  <a class="button">{{attdata.sub8atp}}</a>
+  </div>
+ 
+
+</ion-content>
+        
+    
+
+    
+    </body></html>
